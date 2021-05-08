@@ -28,7 +28,13 @@ object ChessboardFenPropertyAdapter {
                 fenAttrChanged.onChange()
             }
 
+            override fun onIsWhiteChanged(isWhite: Boolean) {
+            }
+
             override fun onUndo() {
+            }
+
+            override fun onAllowOpponentMovesChanged(allowOpponentMovesChanged: Boolean) {
             }
 
             override fun onCheck(isWhiteChecked: Boolean) {

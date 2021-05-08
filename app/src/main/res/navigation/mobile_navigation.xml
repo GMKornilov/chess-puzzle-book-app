@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_puzzle">
 
     <fragment
         android:id="@+id/nav_home"
@@ -28,5 +28,9 @@
         android:name="com.github.gmkornilov.chess_puzzle_book.ui.puzzle.PuzzleFragment"
         android:label="Solve puzzles"
         tools:layout="@layout/fragment_puzzle"
-        />
+        >
+        <argument
+            android:name="taskProvider"
+            app:argType="com.github.gmkornilov.chess_puzzle_book.data.providers.TaskProvider" />
+    </fragment>
 </navigation>

@@ -6,29 +6,35 @@ import androidx.databinding.DataBindingUtil
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import com.github.gmkornilov.chess_puzzle_book.R
 import com.github.gmkornilov.chess_puzzle_book.databinding.FragmentPuzzleBinding
 
 class PuzzleFragment : Fragment() {
-    private lateinit var puzzleViewModel: PuzzleViewModel
+    val args: PuzzleFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val binding = DataBindingUtil.inflate<FragmentPuzzleBinding>(inflater, R.layout.fragment_puzzle, container, false)
 
-        puzzleViewModel =
-            ViewModelProvider(this).get(PuzzleViewModel::class.java)
+        val puzzleViewModel : PuzzleViewModel by viewModels {
+            PuzzleFragmentViewModelFactory(args.taskProvider)
+        }
         binding.viewmodel = puzzleViewModel
 
+        if (puzzleViewModel.task.value == null) {
+            puzzleViewModel.getTask()
+        }
 
         return inflater.inflate(R.layout.fragment_puzzle, container, false)
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance() =
                 PuzzleFragment()
     }
 }

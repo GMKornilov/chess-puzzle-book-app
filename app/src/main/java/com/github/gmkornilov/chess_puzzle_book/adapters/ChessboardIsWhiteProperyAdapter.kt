@@ -5,30 +5,30 @@ import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import com.github.gmkornilov.chessboard.view.ChessboardView
 
-object ChessboardSanMovePropertyAdapter {
-    @InverseBindingAdapter(attribute = "fen")
-    @JvmStatic fun getFenValue(view: ChessboardView): String? {
-        return view.fen
+object ChessboardIsWhiteProperyAdapter {
+    @InverseBindingAdapter(attribute = "whiteTowardsUser")
+    @JvmStatic fun getIsWhiteValue(view: ChessboardView): Boolean? {
+        return view.isWhite
     }
 
-    @BindingAdapter("fen")
-    @JvmStatic fun setFenValue(view: ChessboardView, fen: String?) {
-        if (view.fen != fen) {
-            view.fen = fen
+    @BindingAdapter("app:whiteTowardsUser")
+    @JvmStatic fun setIsWhiteValue(view: ChessboardView, isWhite: Boolean?) {
+        if (view.isWhite != isWhite && isWhite != null) {
+            view.isWhite = isWhite
         }
     }
 
-    @BindingAdapter("app:fenAttrChanged")
-    @JvmStatic fun setListener(view: ChessboardView, fenAttrChanged: InverseBindingListener) {
+    @BindingAdapter("app:whiteTowardsUserAttrChanged")
+    @JvmStatic fun setListener(view: ChessboardView, isWhiteAttrChanged: InverseBindingListener) {
         view.addBoardListener(object: ChessboardView.BoardListener {
             override fun onMove(move: String) {
             }
 
             override fun onFenChanged(newFen: String) {
-                fenAttrChanged.onChange()
             }
 
             override fun onIsWhiteChanged(isWhite: Boolean) {
+                isWhiteAttrChanged.onChange()
             }
 
             override fun onUndo() {
