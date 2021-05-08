@@ -1,10 +1,11 @@
 package com.github.gmkornilov.chess_puzzle_book.data.providers
 
 import android.os.Parcelable
-import com.github.gmkornilov.chess_puzzle_book.data.Task
+import com.github.gmkornilov.chess_puzzle_book.data.model.Task
+import com.github.gmkornilov.chess_puzzle_book.data.api.Result
 
-interface TaskProvider: Parcelable {
-    suspend fun getNextTask(): Task
+interface TaskProvider : Parcelable {
+    suspend fun getNextTask(elo: Int): Result<Task>
 
-    suspend fun hasNext(): Boolean
+    fun hasNext(): Boolean
 }

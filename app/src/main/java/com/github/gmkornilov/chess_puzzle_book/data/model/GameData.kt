@@ -1,8 +1,7 @@
-package com.github.gmkornilov.chess_puzzle_book.data
+package com.github.gmkornilov.chess_puzzle_book.data.model
 
 import android.os.Parcel
 import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 import kotlinx.datetime.*
 
