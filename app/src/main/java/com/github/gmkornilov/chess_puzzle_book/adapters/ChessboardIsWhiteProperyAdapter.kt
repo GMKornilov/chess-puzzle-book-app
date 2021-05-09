@@ -11,7 +11,7 @@ object ChessboardIsWhiteProperyAdapter {
         return view.isWhite
     }
 
-    @BindingAdapter("app:whiteTowardsUser")
+    @BindingAdapter("whiteTowardsUser")
     @JvmStatic fun setIsWhiteValue(view: ChessboardView, isWhite: Boolean?) {
         if (view.isWhite != isWhite && isWhite != null) {
             view.isWhite = isWhite

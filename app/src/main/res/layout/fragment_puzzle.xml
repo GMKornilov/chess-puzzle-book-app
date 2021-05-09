@@ -18,8 +18,9 @@
             android:id="@+id/chessboardView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:whiteTowardsUser="@{viewmodel.task.isWhiteTurn}"
+            app:allow_opponent_moves="false"
             app:fen="@{viewmodel.task.startFEN}"
+            app:whiteTowardsUser="@{viewmodel.task.isWhiteTurn}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
