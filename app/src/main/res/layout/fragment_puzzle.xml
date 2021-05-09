@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
         <variable
             name="viewmodel"
             type="com.github.gmkornilov.chess_puzzle_book.ui.puzzle.PuzzleViewModel" />
@@ -25,5 +26,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <FrameLayout
+            android:id="@+id/conditionalFrame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/chessboardView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+            <ProgressBar
+                android:visibility="@{viewmodel.isLoading ? View.VISIBLE : View.GONE}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </FrameLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:text="@string/next_task"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewmodel.taskSolved ? View.VISIBLE : View.INVISIBLE}"
+            android:onClick="@{viewmodel::nextClicked}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

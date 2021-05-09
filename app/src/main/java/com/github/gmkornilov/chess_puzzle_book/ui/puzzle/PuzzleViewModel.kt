@@ -1,6 +1,7 @@
 package com.github.gmkornilov.chess_puzzle_book.ui.puzzle
 
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -24,6 +25,8 @@ class PuzzleViewModel(
         MutableLiveData()
     }
 
+    val taskSolved = MutableLiveData<Boolean>()
+
     val undoEvent = MutableLiveData<Event<Unit>>()
 
     val taskStartFen = MutableLiveData<String>()
@@ -40,9 +43,14 @@ class PuzzleViewModel(
         getTask()
     }
 
+    fun nextClicked(v: View?) {
+        v ?: return
+        getTask()
+    }
+
     fun getTask() = viewModelScope.launch {
         isLoading.postValue(true)
-        val res = withContext(Dispatchers.Default) {
+        val res = withContext(Dispatchers.IO) {
             taskProvider.getNextTask(1500)
         }
         when (res) {
@@ -54,6 +62,7 @@ class PuzzleViewModel(
                 legalTurns.postValue(res.data.FirstPossibleTurns)
                 isWhiteTurn.postValue(res.data.IsWhiteTurn)
                 targetElo.postValue(res.data.TargetElo)
+                taskSolved.postValue(false)
             }
             is Result.Error -> {
                 Log.println(Log.ERROR, "Internet error", res.exception.message!!)
@@ -98,6 +107,7 @@ class PuzzleViewModel(
             return
         }
         if (turn.IsLastTurn) {
+            taskSolved.value = true
             return
         }
 
