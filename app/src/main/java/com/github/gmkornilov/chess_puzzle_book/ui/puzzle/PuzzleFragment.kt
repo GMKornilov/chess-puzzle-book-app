@@ -35,6 +35,14 @@ class PuzzleFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewmodel = puzzleViewModel
 
+        binding.chessboardView.addBoardListener(viewModel)
+
+        puzzleViewModel.undoEvent.observe(viewLifecycleOwner, { event ->
+            event.getContentIfNotHandledOrReturnNull()?.let {
+                binding.chessboardView.undo()
+            }
+        })
+
         return binding.root
     }
 

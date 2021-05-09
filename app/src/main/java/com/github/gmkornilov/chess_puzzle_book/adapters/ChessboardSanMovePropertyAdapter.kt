@@ -6,35 +6,29 @@ import androidx.databinding.InverseBindingListener
 import com.github.gmkornilov.chessboard.view.ChessboardView
 
 object ChessboardSanMovePropertyAdapter {
-    @InverseBindingAdapter(attribute = "fen")
+    @InverseBindingAdapter(attribute = "lastMove")
     @JvmStatic fun getFenValue(view: ChessboardView): String? {
-        return view.fen
+        return view.lastMove
     }
 
-    @BindingAdapter("fen")
-    @JvmStatic fun setFenValue(view: ChessboardView, fen: String?) {
-        if (view.fen != fen) {
-            view.fen = fen
+    @BindingAdapter("lastMove")
+    @JvmStatic fun setFenValue(view: ChessboardView, lastMove: String?) {
+        if (view.lastMove != lastMove) {
+            view.lastMove = lastMove
         }
     }
 
-    @BindingAdapter("app:fenAttrChanged")
+    @BindingAdapter("app:lastMoveAttrChanged")
     @JvmStatic fun setListener(view: ChessboardView, fenAttrChanged: InverseBindingListener) {
         view.addBoardListener(object: ChessboardView.BoardListener {
             override fun onMove(move: String) {
-            }
-
-            override fun onFenChanged(newFen: String) {
                 fenAttrChanged.onChange()
             }
 
-            override fun onIsWhiteChanged(isWhite: Boolean) {
+            override fun onFenChanged(newFen: String) {
             }
 
             override fun onUndo() {
-            }
-
-            override fun onAllowOpponentMovesChanged(allowOpponentMovesChanged: Boolean) {
             }
 
             override fun onCheck(isWhiteChecked: Boolean) {
@@ -44,6 +38,13 @@ object ChessboardSanMovePropertyAdapter {
             }
 
             override fun onStalemate() {
+            }
+
+            override fun onIsWhiteChanged(isWhite: Boolean) {
+
+            }
+
+            override fun onAllowOpponentMovesChanged(allowOpponentMovesChanged: Boolean) {
             }
         })
     }
