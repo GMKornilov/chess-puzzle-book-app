@@ -54,8 +54,11 @@ class PuzzleViewModel(
 
     fun hintMove(v : View?)  {
         v ?: return
-
-        val turn = legalTurns.value?.first() ?: return
+        val turns = legalTurns.value ?: return
+        if (turns.isEmpty()) {
+            return
+        }
+        val turn = turns.first() ?: return
         lastMoveHinted.value = true
         turnEvent.value = Event(turn.SanNotation)
     }
@@ -81,6 +84,7 @@ class PuzzleViewModel(
             }
             is Result.Error -> {
                 Log.println(Log.ERROR, "Internet error", res.exception.message!!)
+                exceptionEvent.postValue(Event(res.exception))
             }
         }
         isLoading.postValue(false)
