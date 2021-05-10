@@ -18,4 +18,6 @@
     <string name="correct_turn">Nice turn!</string>
     <string name="wrong_turn">Wrong turn! Try again.</string>
     <string name="show_turn">Show right turn</string>
+    <string name="your_elo">Your elo:</string>
+    <string name="task_target_elo">Task elo:</string>
 </resources>

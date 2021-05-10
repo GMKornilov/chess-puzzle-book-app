@@ -1,5 +1,6 @@
 package com.github.gmkornilov.chess_puzzle_book.ui.puzzle
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -35,6 +36,11 @@ class PuzzleFragment : Fragment() {
 
         binding.chessboardView.addBoardListener(puzzleViewModel)
 
+        puzzleViewModel.fenLoadedEvent.observe(viewLifecycleOwner, { event ->
+            event.getContentIfNotHandledOrReturnNull()?.let {
+                binding.chessboardView.fen = it
+            }
+        })
         puzzleViewModel.undoEvent.observe(viewLifecycleOwner, { event ->
             event.getContentIfNotHandledOrReturnNull()?.let {
                 binding.chessboardView.undo()
@@ -51,7 +57,32 @@ class PuzzleFragment : Fragment() {
             }
         })
 
+        var elo = 1200
+        val sp = activity?.getSharedPreferences("elo", Context.MODE_PRIVATE)
+        if (sp != null) {
+            elo = sp.getInt("elo", 1488)
+        }
+        puzzleViewModel.elo.value = elo
+
         return binding.root
+    }
+
+    override fun onResume() {
+        val vmFen = puzzleViewModel.currentFen.value
+        if (vmFen != null) {
+            binding.chessboardView.fen = vmFen
+        }
+        super.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        val elo = puzzleViewModel.elo.value!!
+        val sp = activity?.getSharedPreferences("elo", Context.MODE_PRIVATE) ?: return
+
+        val editor = sp.edit()
+        editor.putInt("elo", elo + 10)
+        editor.apply()
     }
 
     companion object {

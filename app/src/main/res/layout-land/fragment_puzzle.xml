@@ -23,7 +23,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:allow_opponent_moves="false"
-            app:fen="@{viewmodel.task.startFEN}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:whiteTowardsUser="@{viewmodel.task.isWhiteTurn}" />

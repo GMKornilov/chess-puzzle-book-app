@@ -26,6 +26,11 @@ class PuzzleViewModel(
         MutableLiveData()
     }
 
+    val elo = MutableLiveData<Int>()
+
+    val fenLoadedEvent = MutableLiveData<Event<String>>()
+    val currentFen = MutableLiveData<String?>()
+
     val taskDone = MutableLiveData<Boolean>()
     private val legalTurns = MutableLiveData<List<Turn>>()
 
@@ -36,7 +41,6 @@ class PuzzleViewModel(
     val turnEvent = MutableLiveData<Event<String>>()
 
     val undoEvent = MutableLiveData<Event<Unit>>()
-    val taskStartFen = MutableLiveData<String>()
     val isWhiteTurn = MutableLiveData<Boolean>()
 
     val targetElo = MutableLiveData<Int>()
@@ -58,12 +62,13 @@ class PuzzleViewModel(
         if (turns.isEmpty()) {
             return
         }
-        val turn = turns.first() ?: return
+        val turn = turns.first()
         lastMoveHinted.value = true
         turnEvent.value = Event(turn.SanNotation)
     }
 
     private fun getTask() = viewModelScope.launch {
+        currentFen.postValue(null)
         lastMoveWrong.postValue(false)
         lastMoveCorrect.postValue(false)
         lastMoveHinted.postValue(false)
@@ -76,7 +81,7 @@ class PuzzleViewModel(
                 Log.println(Log.DEBUG, "Task json", res.data.toString())
                 task.postValue(res.data)
 
-                taskStartFen.postValue(res.data.StartFEN)
+                fenLoadedEvent.postValue(Event(res.data.StartFEN))
                 legalTurns.postValue(res.data.FirstPossibleTurns)
                 isWhiteTurn.postValue(res.data.IsWhiteTurn)
                 targetElo.postValue(res.data.TargetElo)
@@ -140,8 +145,9 @@ class PuzzleViewModel(
     // vm only needs to check for valid moves, no need to handle checkmate
     override fun onCheckmate(whiteLost: Boolean) = Unit
 
-    // vm sets fen by itself, no need to handle that
-    override fun onFenChanged(newFen: String) = Unit
+    override fun onFenChanged(newFen: String) {
+        currentFen.value = newFen
+    }
 
     // vm sets isWhite by itself, no need to handle that
     override fun onIsWhiteChanged(isWhite: Boolean) = Unit

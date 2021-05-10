@@ -18,12 +18,11 @@
         tools:context="ui.puzzle.PuzzleFragment">
 
         <com.github.gmkornilov.chessboard.view.ChessboardView
-            android:clickable="@{!viewmodel.isLoading}"
             android:id="@+id/chessboardView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clickable="@{!viewmodel.isLoading}"
             app:allow_opponent_moves="false"
-            app:fen="@{viewmodel.task.startFEN}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:whiteTowardsUser="@{viewmodel.task.isWhiteTurn}" />
@@ -38,20 +37,20 @@
             app:layout_constraintTop_toBottomOf="@id/chessboardView">
 
             <TextView
-                android:textSize="24sp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/correct_turn"
-                app:drawableLeftCompat="@drawable/ic_correct_24"
+                android:textSize="24sp"
                 android:visibility="@{viewmodel.lastMoveCorrect ? View.VISIBLE : View.GONE}"
-                tools:visibility="visible" />
+                app:drawableLeftCompat="@drawable/ic_correct_24"
+                tools:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:visibility="@{viewmodel.lastMoveWrong ? View.VISIBLE : View.GONE}"
-                tools:visibility="gone">
+                tools:visibility="visible">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -61,12 +60,12 @@
                     app:drawableLeftCompat="@drawable/ic_wrong_24" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:layout_gravity="center_horizontal"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:singleLine="true"
+                    android:layout_gravity="center_horizontal"
                     android:onClick="@{viewmodel::hintMove}"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:singleLine="true"
                     android:text="@string/show_turn" />
             </LinearLayout>
 
@@ -76,6 +75,62 @@
                 android:visibility="@{viewmodel.isLoading ? View.VISIBLE : View.GONE}"
                 tools:visibility="gone" />
         </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/userEloLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/taskEloLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/your_elo"
+                android:textSize="24sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="@{`` + viewmodel.elo}"
+                android:textSize="24sp"
+                tools:text="1302" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+120"
+                android:textSize="24sp"
+                app:drawableLeftCompat="@drawable/ic_arrow_up"
+                tools:text="+14" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/taskEloLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/nextButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/task_target_elo"
+                android:textSize="24sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="@string/your_elo"
+                android:textSize="24sp"
+                tools:text="1502" />
+        </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/nextButton"
