@@ -7,6 +7,10 @@ plugins {
     id 'androidx.navigation.safeargs.kotlin'
 }
 
+def localProperties = new Properties()
+// local.properties should have baseUrl property
+localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -22,7 +26,11 @@ android {
     }
 
     buildTypes {
+        debug {
+            resValue("string", "base_url", localProperties["baseUrl"])
+        }
         release {
+            resValue("string", "base_url", localProperties["baseUrl"])
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

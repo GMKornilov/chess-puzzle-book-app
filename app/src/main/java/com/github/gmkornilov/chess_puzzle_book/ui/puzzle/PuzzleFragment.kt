@@ -10,10 +10,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.github.gmkornilov.chess_puzzle_book.R
 import com.github.gmkornilov.chess_puzzle_book.databinding.FragmentPuzzleBinding
+import com.google.android.material.snackbar.Snackbar
 
 class PuzzleFragment : Fragment() {
-    val args: PuzzleFragmentArgs by navArgs()
-    private lateinit var puzzleViewModel: PuzzleViewModel
+    private val args: PuzzleFragmentArgs by navArgs()
+    private val puzzleViewModel: PuzzleViewModel by viewModels {
+        PuzzleFragmentViewModelFactory(args.taskProvider)
+    }
     private lateinit var binding: FragmentPuzzleBinding
 
     override fun onCreateView(
@@ -27,19 +30,24 @@ class PuzzleFragment : Fragment() {
             false
         )
 
-        val viewModel: PuzzleViewModel by viewModels {
-            PuzzleFragmentViewModelFactory(args.taskProvider)
-        }
-        puzzleViewModel = viewModel
-
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewmodel = puzzleViewModel
 
-        binding.chessboardView.addBoardListener(viewModel)
+        binding.chessboardView.addBoardListener(puzzleViewModel)
 
         puzzleViewModel.undoEvent.observe(viewLifecycleOwner, { event ->
             event.getContentIfNotHandledOrReturnNull()?.let {
                 binding.chessboardView.undo()
+            }
+        })
+        puzzleViewModel.turnEvent.observe(viewLifecycleOwner, { event ->
+            event.getContentIfNotHandledOrReturnNull()?.let {
+                binding.chessboardView.lastMove = it
+            }
+        })
+        puzzleViewModel.exceptionEvent.observe(viewLifecycleOwner, {event ->
+            event.getContentIfNotHandledOrReturnNull()?.let {
+                Snackbar.make(requireView(), it.message!!, Snackbar.LENGTH_SHORT).show()
             }
         })
 

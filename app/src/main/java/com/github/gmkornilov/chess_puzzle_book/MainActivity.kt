@@ -30,7 +30,8 @@ class MainActivity : AppCompatActivity() {
 
         val navInflater = navController.navInflater
         val graph = navInflater.inflate(R.navigation.mobile_navigation)
-        val arg = NavArgument.Builder().setDefaultValue(RemoteTaskProvider("http://10.0.2.2:8080")).build()
+        val baseUrl = resources.getString(R.string.base_url)
+        val arg = NavArgument.Builder().setDefaultValue(RemoteTaskProvider("http://$baseUrl")).build()
         graph.addArgument("taskProvider", arg)
 
         navController.graph = graph

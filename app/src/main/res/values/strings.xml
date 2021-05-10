@@ -14,4 +14,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="solve_puzzles">Solve puzzles</string>
     <string name="next_task">NEXT</string>
+    <string name="correct">Correct!</string>
+    <string name="correct_turn">Nice turn!</string>
+    <string name="wrong_turn">Wrong turn! Try again.</string>
+    <string name="show_turn">Show right turn</string>
 </resources>

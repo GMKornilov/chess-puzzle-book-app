@@ -10,6 +10,7 @@ import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.*
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType
+import retrofit2.Response
 import retrofit2.Retrofit
 
 @Parcelize
@@ -28,7 +29,13 @@ class RemoteTaskProvider(
     }()
 
     override suspend fun getNextTask(elo: Int): Result<Task> {
-        val response = taskApi.fetchTask(elo)
+        val response: Response<Task>
+        try {
+            response = taskApi.fetchTask(elo)
+        }
+        catch (t: Exception) {
+            return Result.Error(t)
+        }
         return if (response.isSuccessful) {
             Result.Success(response.body()!!)
         } else {

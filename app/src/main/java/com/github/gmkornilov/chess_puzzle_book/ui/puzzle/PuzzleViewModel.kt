@@ -14,6 +14,7 @@ import com.github.gmkornilov.chessboard.view.ChessboardView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.Exception
 
 class PuzzleViewModel(
     val taskProvider: TaskProvider,
@@ -25,19 +26,22 @@ class PuzzleViewModel(
         MutableLiveData()
     }
 
-    val taskSolved = MutableLiveData<Boolean>()
+    val taskDone = MutableLiveData<Boolean>()
+    private val legalTurns = MutableLiveData<List<Turn>>()
+
+    private val lastMoveHinted = MutableLiveData<Boolean>()
+    val lastMoveCorrect = MutableLiveData<Boolean>()
+    val lastMoveWrong = MutableLiveData<Boolean>()
+
+    val turnEvent = MutableLiveData<Event<String>>()
 
     val undoEvent = MutableLiveData<Event<Unit>>()
-
     val taskStartFen = MutableLiveData<String>()
-
-    val legalTurns = MutableLiveData<List<Turn>>()
-
     val isWhiteTurn = MutableLiveData<Boolean>()
 
     val targetElo = MutableLiveData<Int>()
 
-    val botAnswerTurn = MutableLiveData<String>()
+    val exceptionEvent = MutableLiveData<Event<Exception>>()
 
     init {
         getTask()
@@ -48,7 +52,18 @@ class PuzzleViewModel(
         getTask()
     }
 
-    fun getTask() = viewModelScope.launch {
+    fun hintMove(v : View?)  {
+        v ?: return
+
+        val turn = legalTurns.value?.first() ?: return
+        lastMoveHinted.value = true
+        turnEvent.value = Event(turn.SanNotation)
+    }
+
+    private fun getTask() = viewModelScope.launch {
+        lastMoveWrong.postValue(false)
+        lastMoveCorrect.postValue(false)
+        lastMoveHinted.postValue(false)
         isLoading.postValue(true)
         val res = withContext(Dispatchers.IO) {
             taskProvider.getNextTask(1500)
@@ -62,7 +77,7 @@ class PuzzleViewModel(
                 legalTurns.postValue(res.data.FirstPossibleTurns)
                 isWhiteTurn.postValue(res.data.IsWhiteTurn)
                 targetElo.postValue(res.data.TargetElo)
-                taskSolved.postValue(false)
+                taskDone.postValue(false)
             }
             is Result.Error -> {
                 Log.println(Log.ERROR, "Internet error", res.exception.message!!)
@@ -72,21 +87,6 @@ class PuzzleViewModel(
     }
 
     // region chessboard events
-
-    // view model sets it by itself, no need to handle this
-    override fun onAllowOpponentMovesChanged(allowOpponentMovesChanged: Boolean) = Unit
-
-    // vm only needs to check for valid moves, no need to handle check
-    override fun onCheck(isWhiteChecked: Boolean) = Unit
-
-    // vm only needs to check for valid moves, no need to handle checkmate
-    override fun onCheckmate(whiteLost: Boolean) = Unit
-
-    // vm sets fen by itself, no need to handle that
-    override fun onFenChanged(newFen: String) = Unit
-
-    // vm sets isWhite by itself, no need to handle that
-    override fun onIsWhiteChanged(isWhite: Boolean) = Unit
 
     override fun onMove(move: String) {
         // if incoming move is bot move, we need to pass the turn back to player
@@ -103,19 +103,44 @@ class PuzzleViewModel(
 
         val turn = legalTurns.value?.find { it.SanNotation == moveToFind }
         if (turn == null) {
-            undoEvent.postValue(Event(Unit))
+            lastMoveCorrect.value = false
+            lastMoveWrong.value = true
+            undoEvent.value = Event(Unit)
             return
         }
+
+        if (lastMoveHinted.value != true) {
+            lastMoveCorrect.value = true
+            lastMoveWrong.value = false
+        } else {
+            lastMoveHinted.value = false
+        }
+
         if (turn.IsLastTurn) {
-            taskSolved.value = true
+            legalTurns.value = emptyList()
+            taskDone.value = true
             return
         }
 
-        botAnswerTurn.postValue(turn.AnswerTurnSanNotation)
-        legalTurns.postValue(turn.ContinueVariations)
-
+        legalTurns.value = turn.ContinueVariations
         isWhiteTurn.value = isWhiteTurn.value?.not()
+        turnEvent.value = Event(turn.AnswerTurnSanNotation)
     }
+
+    // view model sets it by itself, no need to handle this
+    override fun onAllowOpponentMovesChanged(allowOpponentMovesChanged: Boolean) = Unit
+
+    // vm only needs to check for valid moves, no need to handle check
+    override fun onCheck(isWhiteChecked: Boolean) = Unit
+
+    // vm only needs to check for valid moves, no need to handle checkmate
+    override fun onCheckmate(whiteLost: Boolean) = Unit
+
+    // vm sets fen by itself, no need to handle that
+    override fun onFenChanged(newFen: String) = Unit
+
+    // vm sets isWhite by itself, no need to handle that
+    override fun onIsWhiteChanged(isWhite: Boolean) = Unit
 
     // vm doesn't need to handle that
     override fun onStalemate() = Unit
