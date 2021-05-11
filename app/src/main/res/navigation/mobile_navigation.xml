@@ -6,24 +6,6 @@
     app:startDestination="@+id/nav_puzzle">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.github.gmkornilov.chess_puzzle_book.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
-
-    <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.github.gmkornilov.chess_puzzle_book.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
-
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.github.gmkornilov.chess_puzzle_book.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
-
-    <fragment
         android:id="@+id/nav_puzzle"
         android:name="com.github.gmkornilov.chess_puzzle_book.ui.puzzle.PuzzleFragment"
         android:label="Solve puzzles"
