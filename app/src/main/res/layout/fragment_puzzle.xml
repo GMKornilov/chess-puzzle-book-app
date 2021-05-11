@@ -83,7 +83,8 @@
             android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@id/taskEloLayout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="@{viewmodel.taskDone ? View.VISIBLE : View.GONE}">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -102,9 +103,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+120"
+                android:text="@{`` + viewmodel.eloDiff}"
                 android:textSize="24sp"
-                app:drawableLeftCompat="@drawable/ic_arrow_up"
+                android:drawableLeft="@{viewmodel.eloDiff >= 0 ? @drawable/ic_arrow_up : @drawable/ic_arrow_down}"
+                tools:drawableLeft="@drawable/ic_arrow_up"
                 tools:text="+14" />
         </LinearLayout>
 
@@ -116,7 +118,8 @@
             android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@id/nextButton"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="@{viewmodel.taskDone ? View.VISIBLE : View.GONE}">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -127,7 +130,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:text="@string/your_elo"
+                android:text="@{`` + viewmodel.task.targetElo}"
                 android:textSize="24sp"
                 tools:text="1502" />
         </LinearLayout>

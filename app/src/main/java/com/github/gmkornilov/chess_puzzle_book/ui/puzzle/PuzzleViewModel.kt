@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.gmkornilov.chess_puzzle_book.data.Event
 import com.github.gmkornilov.chess_puzzle_book.data.api.Result
+import com.github.gmkornilov.chess_puzzle_book.data.model.EloUtils
 import com.github.gmkornilov.chess_puzzle_book.data.model.Task
 import com.github.gmkornilov.chess_puzzle_book.data.model.Turn
 import com.github.gmkornilov.chess_puzzle_book.data.providers.TaskProvider
@@ -17,7 +18,7 @@ import kotlinx.coroutines.withContext
 import java.lang.Exception
 
 class PuzzleViewModel(
-    val taskProvider: TaskProvider,
+    private val taskProvider: TaskProvider,
 ) : ViewModel(), ChessboardView.BoardListener {
     val isLoading: MutableLiveData<Boolean> by lazy {
         MutableLiveData(false)
@@ -27,6 +28,7 @@ class PuzzleViewModel(
     }
 
     val elo = MutableLiveData<Int>()
+    val eloDiff = MutableLiveData<Int>()
 
     val fenLoadedEvent = MutableLiveData<Event<String>>()
     val currentFen = MutableLiveData<String?>()
@@ -37,13 +39,12 @@ class PuzzleViewModel(
     private val lastMoveHinted = MutableLiveData<Boolean>()
     val lastMoveCorrect = MutableLiveData<Boolean>()
     val lastMoveWrong = MutableLiveData<Boolean>()
+    private val correctMoves = MutableLiveData<Int>()
 
     val turnEvent = MutableLiveData<Event<String>>()
 
     val undoEvent = MutableLiveData<Event<Unit>>()
-    val isWhiteTurn = MutableLiveData<Boolean>()
-
-    val targetElo = MutableLiveData<Int>()
+    private val isWhiteTurn = MutableLiveData<Boolean>()
 
     val exceptionEvent = MutableLiveData<Event<Exception>>()
 
@@ -69,12 +70,14 @@ class PuzzleViewModel(
 
     private fun getTask() = viewModelScope.launch {
         currentFen.postValue(null)
+        correctMoves.postValue(0)
         lastMoveWrong.postValue(false)
         lastMoveCorrect.postValue(false)
         lastMoveHinted.postValue(false)
         isLoading.postValue(true)
         val res = withContext(Dispatchers.IO) {
-            taskProvider.getNextTask(1500)
+            //taskProvider.getNextTask(1500)
+            taskProvider.getNextTask(EloUtils.elo!!)
         }
         when (res) {
             is Result.Success<Task> -> {
@@ -84,7 +87,6 @@ class PuzzleViewModel(
                 fenLoadedEvent.postValue(Event(res.data.StartFEN))
                 legalTurns.postValue(res.data.FirstPossibleTurns)
                 isWhiteTurn.postValue(res.data.IsWhiteTurn)
-                targetElo.postValue(res.data.TargetElo)
                 taskDone.postValue(false)
             }
             is Result.Error -> {
@@ -93,6 +95,15 @@ class PuzzleViewModel(
             }
         }
         isLoading.postValue(false)
+    }
+
+    private fun calcElo(percent: Float) {
+        val curTask = task.value ?: return
+        val curElo = elo.value ?: EloUtils.elo!!
+        val eloDelta = EloUtils.estimateDiffElo(curElo, curTask.TargetElo, percent)
+        eloDiff.value = eloDelta
+        elo.value = curElo + eloDelta
+        EloUtils.elo = elo.value!!
     }
 
     // region chessboard events
@@ -104,20 +115,33 @@ class PuzzleViewModel(
             return
         }
 
+        val turns = legalTurns.value ?: return
+        val correctTurns = correctMoves.value ?: return
+
         val moveToFind = if (move.contains("#") || move.contains("+")) {
             move.dropLast(1)
         } else {
             move
         }
 
-        val turn = legalTurns.value?.find { it.SanNotation == moveToFind }
+
+        val turn = turns.find { it.SanNotation == moveToFind }
         if (turn == null) {
             lastMoveCorrect.value = false
             lastMoveWrong.value = true
+
+            if (taskDone.value != true) {
+                val minDepth = turns.minOf { turn -> turn.minDepth }
+                val percent = correctTurns.toFloat() / (correctTurns + minDepth).toFloat()
+                calcElo(percent)
+            }
+
+            taskDone.value = true
             undoEvent.value = Event(Unit)
             return
         }
 
+        correctMoves.value = correctMoves.value?.plus(1)
         if (lastMoveHinted.value != true) {
             lastMoveCorrect.value = true
             lastMoveWrong.value = false
@@ -126,6 +150,9 @@ class PuzzleViewModel(
         }
 
         if (turn.IsLastTurn) {
+            if (taskDone.value != true) {
+                calcElo(1.0f)
+            }
             legalTurns.value = emptyList()
             taskDone.value = true
             return

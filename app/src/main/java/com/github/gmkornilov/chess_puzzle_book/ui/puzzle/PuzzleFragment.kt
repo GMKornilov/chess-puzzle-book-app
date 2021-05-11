@@ -9,7 +9,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import com.github.gmkornilov.chess_puzzle_book.MainActivity
 import com.github.gmkornilov.chess_puzzle_book.R
+import com.github.gmkornilov.chess_puzzle_book.data.model.EloUtils
 import com.github.gmkornilov.chess_puzzle_book.databinding.FragmentPuzzleBinding
 import com.google.android.material.snackbar.Snackbar
 
@@ -24,6 +26,13 @@ class PuzzleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        var elo = 1200
+        val sp = activity?.getSharedPreferences("elo", Context.MODE_PRIVATE)
+        if (sp != null) {
+            elo = sp.getInt("elo", 1200)
+        }
+        EloUtils.elo = elo
+
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_puzzle,
@@ -57,13 +66,6 @@ class PuzzleFragment : Fragment() {
             }
         })
 
-        var elo = 1200
-        val sp = activity?.getSharedPreferences("elo", Context.MODE_PRIVATE)
-        if (sp != null) {
-            elo = sp.getInt("elo", 1488)
-        }
-        puzzleViewModel.elo.value = elo
-
         return binding.root
     }
 
@@ -77,11 +79,11 @@ class PuzzleFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        val elo = puzzleViewModel.elo.value!!
+        val elo = EloUtils.elo!!
         val sp = activity?.getSharedPreferences("elo", Context.MODE_PRIVATE) ?: return
 
         val editor = sp.edit()
-        editor.putInt("elo", elo + 10)
+        editor.putInt("elo", elo)
         editor.apply()
     }
 
