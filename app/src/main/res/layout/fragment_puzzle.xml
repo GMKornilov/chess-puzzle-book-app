@@ -105,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:text="@{`` + viewmodel.eloDiff}"
                 android:textSize="24sp"
-                android:drawableLeft="@{viewmodel.eloDiff >= 0 ? @drawable/ic_arrow_up : @drawable/ic_arrow_down}"
+                android:drawableStart="@{viewmodel.eloDiff >= 0 ? @drawable/ic_arrow_up : @drawable/ic_arrow_down}"
                 tools:drawableLeft="@drawable/ic_arrow_up"
                 tools:text="+14" />
         </LinearLayout>
@@ -139,8 +139,8 @@
             android:id="@+id/nextButton"
             android:layout_width="0dp"
             android:layout_height="80dp"
-            android:layout_marginStart="2dp"
-            android:layout_marginEnd="2dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:onClick="@{viewmodel::nextClicked}"
             android:text="@string/next_task"
             android:visibility="@{viewmodel.taskDone ? View.VISIBLE : View.INVISIBLE}"

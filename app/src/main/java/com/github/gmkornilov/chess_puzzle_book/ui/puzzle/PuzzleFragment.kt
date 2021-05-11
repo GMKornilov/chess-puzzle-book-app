@@ -26,12 +26,14 @@ class PuzzleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var elo = 1200
-        val sp = activity?.getSharedPreferences("elo", Context.MODE_PRIVATE)
-        if (sp != null) {
-            elo = sp.getInt("elo", 1200)
+        if (EloUtils.elo == null) {
+            var elo = 1200
+            val sp = activity?.getSharedPreferences("elo", Context.MODE_PRIVATE)
+            if (sp != null) {
+                elo = sp.getInt("elo", 1200)
+            }
+            EloUtils.elo = puzzleViewModel.elo.value ?: elo
         }
-        EloUtils.elo = elo
 
         binding = DataBindingUtil.inflate(
             inflater,
