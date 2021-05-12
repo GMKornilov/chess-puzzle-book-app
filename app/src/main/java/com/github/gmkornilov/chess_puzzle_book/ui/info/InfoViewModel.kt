@@ -40,6 +40,7 @@ class InfoViewModel(
         v ?: return
 
         viewModelScope.launch {
+            _loading.postValue(true)
             val jobInfoResult = withContext(Dispatchers.IO) {
                 fetchJob()
             }
@@ -49,6 +50,7 @@ class InfoViewModel(
                 }
                 is Result.Error -> {
                     _exceptionEvent.postValue(Event(jobInfoResult.exception))
+                    _loading.postValue(false)
                     return@launch
                 }
             }
@@ -59,20 +61,23 @@ class InfoViewModel(
                     is Result.Success<JobStatus> -> {
                         if (result.data.done) {
                             _loadedEvent.postValue(Event(result.data))
+                            break
                         } else {
                             _progress.postValue(
                                 convertToPercent(result.data.progress)
                             )
                         }
-                        break
                     }
                     is Result.Error -> {
                         Log.println(Log.ERROR, "Internet error", result.exception.message!!)
+                        _loading.postValue(false)
                         _exceptionEvent.postValue(Event(result.exception))
+                        return@launch
                     }
                 }
             }
             channel.cancel()
+            _loading.postValue(false)
         }
     }
 

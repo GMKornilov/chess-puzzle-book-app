@@ -21,8 +21,9 @@
             android:id="@+id/imageView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:contentDescription="@string/nice_black_bishop"
-            android:src="@drawable/ic_bb"
+            android:src="@drawable/ic_wb"
             app:layout_constraintBottom_toTopOf="@id/username"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,20 +43,20 @@
 
         <EditText
             android:id="@+id/username"
-            android:text="@={viewmodel.username}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="96dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
             android:hint="@string/username"
             android:importantForAutofill="no"
             android:inputType="textEmailAddress"
             android:selectAllOnFocus="true"
+            android:text="@={viewmodel.username}"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/generateText"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/imageView2" />
 
         <LinearLayout
             android:id="@+id/lastGamesLayout"
@@ -79,6 +80,7 @@
                 android:value="@={viewmodel.games}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:layout_marginHorizontal="8dp" />
 
             <TextView
@@ -96,11 +98,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginStart="48dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="48dp"
-            android:layout_marginBottom="64dp"
-            android:enabled="false"
+            android:enabled="@{!viewmodel.loading}"
             android:text="@string/generate"
             android:onClick="@{viewmodel::generate}"
             app:layout_constraintEnd_toEndOf="parent"

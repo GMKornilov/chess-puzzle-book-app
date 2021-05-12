@@ -34,6 +34,11 @@ class InfoFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewmodel = infoViewModel
 
+        binding.lastGames.minValue = 1
+        binding.lastGames.maxValue = 500
+        binding.lastGames.value = 1
+        binding.lastGames.wrapSelectorWheel = false
+
         infoViewModel.loadedEvent.observe(viewLifecycleOwner, { event ->
             event.getContentIfNotHandledOrReturnNull()?.let {
                 if (it.error.isNotEmpty()) {
