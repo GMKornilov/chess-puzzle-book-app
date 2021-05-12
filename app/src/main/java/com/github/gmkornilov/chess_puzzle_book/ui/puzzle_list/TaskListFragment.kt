@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.github.gmkornilov.chess_puzzle_book.R
+import com.github.gmkornilov.chess_puzzle_book.data.providers.ListTaskProvider
 
 class TaskListFragment : Fragment() {
     private val args: TaskListFragmentArgs by navArgs()
@@ -46,6 +48,10 @@ class TaskListFragment : Fragment() {
 
     private fun callback(index: Int) {
         Log.d("Select", args.tasks.tasks[index].toString())
+        val provider = ListTaskProvider(args.tasks.tasks, index)
+        val bundle = Bundle()
+        bundle.putParcelable("taskProvider", provider)
+        findNavController().navigate(R.id.nav_puzzle, bundle)
     }
 
     companion object {

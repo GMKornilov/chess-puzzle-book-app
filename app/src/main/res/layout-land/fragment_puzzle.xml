@@ -142,6 +142,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:onClick="@{viewmodel::nextClicked}"
+            android:enabled="@{viewmodel.hasNext}"
             android:text="@string/next_task"
             android:visibility="@{viewmodel.taskDone ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -75,6 +75,9 @@ class PuzzleViewModel(
     private val _exceptionEvent = MutableLiveData<Event<Exception>>()
     val exceptionEvent: LiveData<Event<Exception>> = _exceptionEvent
 
+    private val _hasNext = MutableLiveData<Boolean>()
+    val hasNext: LiveData<Boolean> = _hasNext
+
     init {
         getTask()
     }
@@ -122,6 +125,7 @@ class PuzzleViewModel(
             }
         }
         _isLoading.postValue(false)
+        _hasNext.postValue(taskProvider.hasNext())
     }
 
     private fun calcElo(percent: Float) {

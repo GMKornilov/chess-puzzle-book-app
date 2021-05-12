@@ -32,7 +32,7 @@ class InfoFragment : Fragment() {
             container,
             false
         )
- 
+
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewmodel = infoViewModel
 
