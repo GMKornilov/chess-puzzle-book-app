@@ -26,4 +26,5 @@
     <string name="generate_games_of">Generate games of</string>
     <string name="from_last">From last</string>
     <string name="games">games</string>
+    <string name="generate_puzzles">Generate puzzles</string>
 </resources>

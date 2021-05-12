@@ -8,5 +8,9 @@
             android:id="@+id/nav_puzzle"
             android:icon="@drawable/ic_bp"
             android:title="@string/solve_puzzles"/>
+        <item
+            android:id="@+id/nav_info"
+            android:icon="@drawable/ic_bb"
+            android:title="@string/generate_puzzles"/>
     </group>
 </menu>

@@ -30,22 +30,27 @@ class MainActivity : AppCompatActivity() {
 
         val navInflater = navController.navInflater
         val graph = navInflater.inflate(R.navigation.mobile_navigation)
-        val baseUrl = resources.getString(R.string.base_url)
-        val arg = NavArgument.Builder().setDefaultValue(RemoteTaskProvider("http://$baseUrl")).build()
-        graph.addArgument("taskProvider", arg)
+        val baseUrl = "http://${resources.getString(R.string.base_url)}"
+        val argUrl = NavArgument.Builder().setDefaultValue(baseUrl).build()
+        val argProvider = NavArgument.Builder().setDefaultValue(RemoteTaskProvider(baseUrl)).build()
+        graph.addArgument("baseUrl", argUrl)
+        graph.addArgument("taskProvider", argProvider)
 
         navController.graph = graph
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when(destination.id) {
                 R.id.nav_puzzle -> {
-                    destination.addArgument("taskProvider", arg)
+                    destination.addArgument("taskProvider", argProvider)
+                }
+                R.id.nav_info -> {
+                    destination.addArgument("baseUrl", argUrl)
                 }
             }
         }
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_puzzle), drawerLayout)
+        appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_puzzle, R.id.nav_info), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }

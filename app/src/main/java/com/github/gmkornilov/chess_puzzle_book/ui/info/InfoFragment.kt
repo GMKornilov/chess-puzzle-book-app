@@ -8,14 +8,15 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.github.gmkornilov.chess_puzzle_book.R
 import com.github.gmkornilov.chess_puzzle_book.databinding.FragmentInfoBinding
 import com.google.android.material.snackbar.Snackbar
 
 class InfoFragment : Fragment() {
-
+    private val args: InfoFragmentArgs by navArgs()
     private val infoViewModel: InfoViewModel by viewModels {
-        InfoViewModelFactory()
+        InfoViewModelFactory(args.baseUrl)
     }
     private lateinit var binding: FragmentInfoBinding
 

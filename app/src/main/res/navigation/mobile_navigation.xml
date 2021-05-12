@@ -15,4 +15,15 @@
             android:name="taskProvider"
             app:argType="com.github.gmkornilov.chess_puzzle_book.data.providers.TaskProvider" />
     </fragment>
+
+    <fragment
+        android:id="@+id/nav_info"
+        android:name="com.github.gmkornilov.chess_puzzle_book.ui.info.InfoFragment"
+        android:label="Generate puzzles"
+        tools:layout="@layout/fragment_info">
+        <argument
+            android:name="baseUrl"
+            app:argType="string"
+            android:defaultValue="http://192.168.31.40:8080"/>
+    </fragment>
 </navigation>
