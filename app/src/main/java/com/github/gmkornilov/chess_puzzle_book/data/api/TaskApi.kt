@@ -1,6 +1,5 @@
 package com.github.gmkornilov.chess_puzzle_book.data.api
 
-import android.os.Parcelable
 import com.github.gmkornilov.chess_puzzle_book.data.model.Task
 import retrofit2.Response
 import retrofit2.http.GET

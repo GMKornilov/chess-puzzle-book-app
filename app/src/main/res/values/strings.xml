@@ -20,4 +20,10 @@
     <string name="show_turn">Show right turn</string>
     <string name="your_elo">Your elo:</string>
     <string name="task_target_elo">Task elo:</string>
+    <string name="username">Lichess.com username</string>
+    <string name="generate">Generate</string>
+    <string name="nice_black_bishop">Nice black bishop</string>
+    <string name="generate_games_of">Generate games of</string>
+    <string name="from_last">From last</string>
+    <string name="games">games</string>
 </resources>

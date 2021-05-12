@@ -8,6 +8,7 @@ class PuzzleFragmentViewModelFactory(
     val taskProvider: TaskProvider,
 ) : ViewModelProvider.Factory {
 
+    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return PuzzleViewModel(taskProvider) as T
     }

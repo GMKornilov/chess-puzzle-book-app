@@ -9,7 +9,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import com.github.gmkornilov.chess_puzzle_book.MainActivity
 import com.github.gmkornilov.chess_puzzle_book.R
 import com.github.gmkornilov.chess_puzzle_book.data.model.EloUtils
 import com.github.gmkornilov.chess_puzzle_book.databinding.FragmentPuzzleBinding
@@ -87,11 +86,5 @@ class PuzzleFragment : Fragment() {
         val editor = sp.edit()
         editor.putInt("elo", elo)
         editor.apply()
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance() =
-            PuzzleFragment()
     }
 }

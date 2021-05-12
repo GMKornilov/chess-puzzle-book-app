@@ -7,7 +7,6 @@ import com.github.gmkornilov.chess_puzzle_book.data.api.TaskNotFound
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
-import kotlinx.serialization.*
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType
 import retrofit2.Response
@@ -18,7 +17,7 @@ class RemoteTaskProvider(
     private val baseUrl: String,
 ) : TaskProvider {
     @IgnoredOnParcel
-    private val taskApi : TaskApi = {
+    private val taskApi : TaskApi = run {
         val contentType = "application/json; charset=utf-8"
         Retrofit
             .Builder()
@@ -26,7 +25,7 @@ class RemoteTaskProvider(
             .addConverterFactory(Json.asConverterFactory(MediaType.parse(contentType)!!))
             .build()
             .create(TaskApi::class.java)
-    }()
+    }
 
     override suspend fun getNextTask(elo: Int): Result<Task> {
         val response: Response<Task>
