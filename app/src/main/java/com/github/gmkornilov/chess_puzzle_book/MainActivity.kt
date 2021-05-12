@@ -11,6 +11,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.github.gmkornilov.chess_puzzle_book.data.api.UrlInfo
 import com.github.gmkornilov.chess_puzzle_book.data.providers.RemoteTaskProvider
 import com.google.android.material.navigation.NavigationView
 
@@ -30,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         val navInflater = navController.navInflater
         val graph = navInflater.inflate(R.navigation.mobile_navigation)
-        val baseUrl = "http://${resources.getString(R.string.base_url)}"
+        val baseUrl = resources.getString(R.string.base_url)
         val argUrl = NavArgument.Builder().setDefaultValue(baseUrl).build()
         val argProvider = NavArgument.Builder().setDefaultValue(RemoteTaskProvider(baseUrl)).build()
         graph.addArgument("baseUrl", argUrl)
@@ -41,9 +42,6 @@ class MainActivity : AppCompatActivity() {
             when(destination.id) {
                 R.id.nav_puzzle -> {
                     destination.addArgument("taskProvider", argProvider)
-                }
-                R.id.nav_info -> {
-                    destination.addArgument("baseUrl", argUrl)
                 }
             }
         }

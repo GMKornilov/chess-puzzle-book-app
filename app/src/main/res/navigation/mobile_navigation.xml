@@ -21,9 +21,5 @@
         android:name="com.github.gmkornilov.chess_puzzle_book.ui.info.InfoFragment"
         android:label="Generate puzzles"
         tools:layout="@layout/fragment_info">
-        <argument
-            android:name="baseUrl"
-            app:argType="string"
-            android:defaultValue="http://192.168.31.40:8080"/>
     </fragment>
 </navigation>

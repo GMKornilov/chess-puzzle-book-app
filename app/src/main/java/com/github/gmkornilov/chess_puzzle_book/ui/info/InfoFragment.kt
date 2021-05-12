@@ -14,9 +14,8 @@ import com.github.gmkornilov.chess_puzzle_book.databinding.FragmentInfoBinding
 import com.google.android.material.snackbar.Snackbar
 
 class InfoFragment : Fragment() {
-    private val args: InfoFragmentArgs by navArgs()
     private val infoViewModel: InfoViewModel by viewModels {
-        InfoViewModelFactory(args.baseUrl)
+        InfoViewModelFactory(resources)
     }
     private lateinit var binding: FragmentInfoBinding
 
