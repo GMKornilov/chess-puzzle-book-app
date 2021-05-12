@@ -51,7 +51,7 @@ class TaskListFragment : Fragment() {
         val provider = ListTaskProvider(args.tasks.tasks, index)
         val bundle = Bundle()
         bundle.putParcelable("taskProvider", provider)
-        findNavController().navigate(R.id.nav_puzzle, bundle)
+        findNavController().navigate(R.id.nav_generated_puzzle, bundle)
     }
 
     companion object {

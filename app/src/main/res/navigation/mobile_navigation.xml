@@ -31,4 +31,15 @@
             android:name="tasks"
             app:argType="com.github.gmkornilov.chess_puzzle_book.data.api.LoadedTasks"/>
     </fragment>
+
+    <fragment
+        android:id="@+id/nav_generated_puzzle"
+        android:name="com.github.gmkornilov.chess_puzzle_book.ui.puzzle.PuzzleFragment"
+        android:label="Solve generated puzzles"
+        tools:layout="@layout/fragment_puzzle"
+        >
+        <argument
+            android:name="taskProvider"
+            app:argType="com.github.gmkornilov.chess_puzzle_book.data.providers.TaskProvider" />
+    </fragment>
 </navigation>
