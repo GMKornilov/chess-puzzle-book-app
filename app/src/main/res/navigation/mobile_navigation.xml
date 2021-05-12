@@ -20,6 +20,15 @@
         android:id="@+id/nav_info"
         android:name="com.github.gmkornilov.chess_puzzle_book.ui.info.InfoFragment"
         android:label="Generate puzzles"
-        tools:layout="@layout/fragment_info">
+        tools:layout="@layout/fragment_info"/>
+
+    <fragment
+        android:id="@+id/nav_task_list"
+        android:name="com.github.gmkornilov.chess_puzzle_book.ui.puzzle_list.TaskListFragment"
+        android:label="Generated puzzles"
+        tools:layout="@layout/fragment_task_list_list">
+        <argument
+            android:name="tasks"
+            app:argType="com.github.gmkornilov.chess_puzzle_book.data.api.LoadedTasks"/>
     </fragment>
 </navigation>

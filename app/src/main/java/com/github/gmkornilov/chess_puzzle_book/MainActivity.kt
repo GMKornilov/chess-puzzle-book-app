@@ -11,7 +11,6 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.github.gmkornilov.chess_puzzle_book.data.api.UrlInfo
 import com.github.gmkornilov.chess_puzzle_book.data.providers.RemoteTaskProvider
 import com.google.android.material.navigation.NavigationView
 

@@ -8,8 +8,10 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.github.gmkornilov.chess_puzzle_book.R
+import com.github.gmkornilov.chess_puzzle_book.data.api.LoadedTasks
 import com.github.gmkornilov.chess_puzzle_book.databinding.FragmentInfoBinding
 import com.google.android.material.snackbar.Snackbar
 
@@ -30,7 +32,7 @@ class InfoFragment : Fragment() {
             container,
             false
         )
-
+ 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewmodel = infoViewModel
 
@@ -45,6 +47,10 @@ class InfoFragment : Fragment() {
                     Snackbar.make(requireView(), it.error, Snackbar.LENGTH_SHORT).show()
                 } else {
                     Log.d("Loaded tasks", it.result.toString())
+                    val loadedTasks = LoadedTasks(it.result)
+                    val bundle = Bundle()
+                    bundle.putParcelable("tasks", loadedTasks)
+                    findNavController().navigate(R.id.nav_task_list, bundle)
                 }
             }
         })
