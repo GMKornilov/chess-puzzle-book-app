@@ -21,14 +21,10 @@ import java.lang.Exception
 class PuzzleViewModel(
     private val taskProvider: TaskProvider,
 ) : ViewModel(), ChessboardView.BoardListener {
-    private val _isLoading: MutableLiveData<Boolean> by lazy {
-        MutableLiveData(false)
-    }
+    private val _isLoading = MutableLiveData<Boolean>(false)
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _task: MutableLiveData<Task?> by lazy {
-        MutableLiveData()
-    }
+    private val _task = MutableLiveData<Task?>()
     val task: LiveData<Task?> = _task
 
 

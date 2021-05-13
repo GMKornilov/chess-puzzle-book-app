@@ -41,6 +41,7 @@ class InfoViewModel(
 
         viewModelScope.launch {
             _loading.postValue(true)
+            _progress.postValue(0)
             val jobInfoResult = withContext(Dispatchers.IO) {
                 fetchJob()
             }
@@ -54,7 +55,7 @@ class InfoViewModel(
                     return@launch
                 }
             }
-            val channel = ticker(delayMillis = 300, initialDelayMillis = 50)
+            val channel = ticker(delayMillis = 1000, initialDelayMillis = 150)
             while (true) {
                 channel.receive()
                 when (val result = fetchJobStatus()) {
