@@ -20,7 +20,7 @@ class InfoViewModel(
 ) : ViewModel() {
     val username = MutableLiveData<String>()
 
-    val games = MutableLiveData<Int>()
+    val games = MutableLiveData(1)
 
     private val jobId = MutableLiveData<String>()
 

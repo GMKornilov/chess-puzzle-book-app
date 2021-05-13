@@ -37,7 +37,7 @@ class InfoFragment : Fragment() {
         binding.viewmodel = infoViewModel
 
         binding.lastGames.minValue = 1
-        binding.lastGames.maxValue = 500
+        binding.lastGames.maxValue = 50
         binding.lastGames.value = 1
         binding.lastGames.wrapSelectorWheel = false
 
