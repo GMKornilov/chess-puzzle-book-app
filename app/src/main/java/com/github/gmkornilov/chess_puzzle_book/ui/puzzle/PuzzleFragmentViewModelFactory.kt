@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.github.gmkornilov.chess_puzzle_book.data.providers.TaskProvider
 
 class PuzzleFragmentViewModelFactory(
-    val taskProvider: TaskProvider,
+    private val taskProvider: TaskProvider,
 ) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")

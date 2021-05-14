@@ -21,14 +21,14 @@ import java.lang.Exception
 class PuzzleViewModel(
     private val taskProvider: TaskProvider,
 ) : ViewModel(), ChessboardView.BoardListener {
-    private val _isLoading = MutableLiveData<Boolean>(false)
+    private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> = _isLoading
 
     private val _task = MutableLiveData<Task?>()
     val task: LiveData<Task?> = _task
 
 
-    val _elo = MutableLiveData<Int>()
+    private val _elo = MutableLiveData<Int>()
     val elo: LiveData<Int> = _elo
 
     private val _eloDiff = MutableLiveData<Int>()
@@ -101,8 +101,8 @@ class PuzzleViewModel(
         _lastMoveCorrect.postValue(false)
         lastMoveHinted.postValue(false)
         _isLoading.postValue(true)
+        _taskDone.postValue(false)
         val result = withContext(Dispatchers.IO) {
-            //taskProvider.getNextTask(1500)
             taskProvider.getNextTask(EloUtils.elo!!)
         }
         when (result) {
@@ -113,7 +113,6 @@ class PuzzleViewModel(
                 _fenLoadedEvent.postValue(Event(result.data.StartFEN))
                 legalTurns.postValue(result.data.FirstPossibleTurns)
                 isWhiteTurn.postValue(result.data.IsWhiteTurn)
-                _taskDone.postValue(false)
             }
             is Result.Error -> {
                 Log.println(Log.ERROR, "Internet error", result.exception.message!!)

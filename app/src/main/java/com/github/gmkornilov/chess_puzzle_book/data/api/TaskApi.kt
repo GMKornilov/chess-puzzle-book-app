@@ -8,12 +8,14 @@ import retrofit2.http.Query
 
 interface TaskApi {
     @GET("task")
-    suspend fun fetchTask(@Query("elo") elo: Int) : Response<Task>
+    suspend fun fetchTask(@Query("elo") elo: Int): Response<Task>
 
     @GET("task/{username}")
-    suspend fun startGenerate(@Path("username") username: String,
-                              @Query("last") last: Int) : Response<JobInfo>
+    suspend fun startGenerate(
+        @Path("username") username: String,
+        @Query("last") last: Int
+    ): Response<JobInfo>
 
     @GET("job/{job_id}")
-    suspend fun getJobStatus(@Path("job_id") jobId: String) : Response<JobStatus>
+    suspend fun getJobStatus(@Path("job_id") jobId: String): Response<JobStatus>
 }

@@ -7,20 +7,23 @@ import com.github.gmkornilov.chessboard.view.ChessboardView
 
 object ChessboardFenPropertyAdapter {
     @InverseBindingAdapter(attribute = "fen")
-    @JvmStatic fun getFenValue(view: ChessboardView): String? {
+    @JvmStatic
+    fun getFenValue(view: ChessboardView): String? {
         return view.fen
     }
 
     @BindingAdapter("fen")
-    @JvmStatic fun setFenValue(view: ChessboardView, fen: String?) {
+    @JvmStatic
+    fun setFenValue(view: ChessboardView, fen: String?) {
         if (view.fen != fen) {
             view.fen = fen
         }
     }
 
     @BindingAdapter("app:fenAttrChanged")
-    @JvmStatic fun setListener(view: ChessboardView, fenAttrChanged: InverseBindingListener) {
-        view.addBoardListener(object: ChessboardView.BoardListener {
+    @JvmStatic
+    fun setListener(view: ChessboardView, fenAttrChanged: InverseBindingListener) {
+        view.addBoardListener(object : ChessboardView.BoardListener {
             override fun onMove(move: String) {
             }
 

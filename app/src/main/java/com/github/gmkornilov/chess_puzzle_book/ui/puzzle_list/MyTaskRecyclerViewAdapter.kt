@@ -39,7 +39,12 @@ class MyTaskRecyclerViewAdapter(
         val localDate = item.GameData.Date.toLocalDateTime(TimeZone.currentSystemDefault())
 
         holder.gameDate.text = "%02d.%02d.%04d %02d:%02d".format(
-            localDate.dayOfMonth, localDate.monthNumber, localDate.year, localDate.hour, localDate.minute)
+            localDate.dayOfMonth,
+            localDate.monthNumber,
+            localDate.year,
+            localDate.hour,
+            localDate.minute
+        )
 
         holder.eloTextView.text = item.TargetElo.toString()
         holder.itemView.setOnClickListener { callback(position) }

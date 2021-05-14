@@ -17,6 +17,7 @@ object EloUtils {
                 40
             }
         }
+
     fun estimateDiffElo(currentElo: Int, taskElo: Int, percent: Float): Int {
         val expectedPercent = 1.0f / (1 + 10f.pow((taskElo - currentElo) / 400))
         return (eloCoeff(currentElo) * (percent - expectedPercent)).toInt()

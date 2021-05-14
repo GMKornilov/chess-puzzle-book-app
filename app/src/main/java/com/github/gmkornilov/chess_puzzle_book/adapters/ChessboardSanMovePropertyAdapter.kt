@@ -7,20 +7,23 @@ import com.github.gmkornilov.chessboard.view.ChessboardView
 
 object ChessboardSanMovePropertyAdapter {
     @InverseBindingAdapter(attribute = "lastMove")
-    @JvmStatic fun getFenValue(view: ChessboardView): String? {
+    @JvmStatic
+    fun getFenValue(view: ChessboardView): String? {
         return view.lastMove
     }
 
     @BindingAdapter("lastMove")
-    @JvmStatic fun setFenValue(view: ChessboardView, lastMove: String?) {
+    @JvmStatic
+    fun setFenValue(view: ChessboardView, lastMove: String?) {
         if (view.lastMove != lastMove) {
             view.lastMove = lastMove
         }
     }
 
     @BindingAdapter("app:lastMoveAttrChanged")
-    @JvmStatic fun setListener(view: ChessboardView, fenAttrChanged: InverseBindingListener) {
-        view.addBoardListener(object: ChessboardView.BoardListener {
+    @JvmStatic
+    fun setListener(view: ChessboardView, fenAttrChanged: InverseBindingListener) {
+        view.addBoardListener(object : ChessboardView.BoardListener {
             override fun onMove(move: String) {
                 fenAttrChanged.onChange()
             }

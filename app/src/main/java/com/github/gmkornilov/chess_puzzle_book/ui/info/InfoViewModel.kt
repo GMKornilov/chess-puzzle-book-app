@@ -16,7 +16,7 @@ import kotlin.Exception
 
 
 class InfoViewModel(
-    val taskApi: TaskApi,
+    private val taskApi: TaskApi,
 ) : ViewModel() {
     val username = MutableLiveData<String>()
 
@@ -105,7 +105,7 @@ class InfoViewModel(
 
     private suspend fun fetchJobStatus(): Result<JobStatus> {
         val jobIdStr = jobId.value ?: return Result.Error(Exception("Job id is not set"))
-        val result: Result<JobStatus> = try {
+        return try {
             val response = withContext(Dispatchers.IO) {
                 taskApi.getJobStatus(jobIdStr)
             }
@@ -117,10 +117,9 @@ class InfoViewModel(
         } catch (t: Exception) {
             Result.Error(t)
         }
-        return result
     }
 
-    private fun convertToPercent(progress:Float): Int {
+    private fun convertToPercent(progress: Float): Int {
         return (progress * 100).toInt()
     }
 }

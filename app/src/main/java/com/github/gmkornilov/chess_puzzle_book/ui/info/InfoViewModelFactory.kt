@@ -15,11 +15,11 @@ import retrofit2.Retrofit
  * Required given LoginViewModel has a non-empty constructor
  */
 class InfoViewModelFactory(
-    val resources: Resources
+    private val resources: Resources
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        val taskApi : TaskApi = run {
+        val taskApi: TaskApi = run {
             val baseUrl = resources.getString(R.string.base_url)
             val contentType = "application/json; charset=utf-8"
             Retrofit

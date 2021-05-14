@@ -24,7 +24,7 @@ class PuzzleFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         if (EloUtils.elo == null) {
             var elo = 1200
             val sp = activity?.getSharedPreferences("elo", Context.MODE_PRIVATE)

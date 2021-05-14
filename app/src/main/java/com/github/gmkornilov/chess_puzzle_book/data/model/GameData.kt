@@ -16,12 +16,11 @@ data class GameData(
     @SerialName("date")
     val Date: Instant,
 ) : Parcelable {
-        constructor(parcel: Parcel) : this(
-                parcel.readString()!!,
-                parcel.readString()!!,
-                parcel.readString()!!.toInstant()
-        ) {
-        }
+    constructor(parcel: Parcel) : this(
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!.toInstant()
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(WhitePlayer)

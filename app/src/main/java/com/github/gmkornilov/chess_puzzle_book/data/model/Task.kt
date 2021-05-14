@@ -8,15 +8,14 @@ import kotlinx.serialization.Serializable
 @Parcelize
 @Serializable
 data class Task(
-        @SerialName("start_fen")
-        val StartFEN: String,
-        @SerialName("first_possible_turns")
-        val FirstPossibleTurns: List<Turn>,
-        @SerialName("is_white_turn")
-        val IsWhiteTurn: Boolean,
-        @SerialName("game_data")
-        val GameData: GameData,
-        @SerialName("target_elo")
-        val TargetElo: Int,
-) : Parcelable {
-}
+    @SerialName("start_fen")
+    val StartFEN: String,
+    @SerialName("first_possible_turns")
+    val FirstPossibleTurns: List<Turn>,
+    @SerialName("is_white_turn")
+    val IsWhiteTurn: Boolean,
+    @SerialName("game_data")
+    val GameData: GameData,
+    @SerialName("target_elo")
+    val TargetElo: Int,
+) : Parcelable

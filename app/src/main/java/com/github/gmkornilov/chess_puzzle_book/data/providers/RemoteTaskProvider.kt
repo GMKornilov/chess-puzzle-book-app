@@ -17,7 +17,7 @@ class RemoteTaskProvider(
     private val baseUrl: String,
 ) : TaskProvider {
     @IgnoredOnParcel
-    private val taskApi : TaskApi = run {
+    private val taskApi: TaskApi = run {
         val contentType = "application/json; charset=utf-8"
         Retrofit
             .Builder()
@@ -31,8 +31,7 @@ class RemoteTaskProvider(
         val response: Response<Task>
         try {
             response = taskApi.fetchTask(elo)
-        }
-        catch (t: Exception) {
+        } catch (t: Exception) {
             return Result.Error(t)
         }
         return if (response.isSuccessful) {

@@ -7,20 +7,23 @@ import com.github.gmkornilov.chessboard.view.ChessboardView
 
 object ChessboardIsWhiteProperyAdapter {
     @InverseBindingAdapter(attribute = "whiteTowardsUser")
-    @JvmStatic fun getIsWhiteValue(view: ChessboardView): Boolean? {
+    @JvmStatic
+    fun getIsWhiteValue(view: ChessboardView): Boolean? {
         return view.isWhite
     }
 
     @BindingAdapter("whiteTowardsUser")
-    @JvmStatic fun setIsWhiteValue(view: ChessboardView, isWhite: Boolean?) {
+    @JvmStatic
+    fun setIsWhiteValue(view: ChessboardView, isWhite: Boolean?) {
         if (view.isWhite != isWhite && isWhite != null) {
             view.isWhite = isWhite
         }
     }
 
     @BindingAdapter("app:whiteTowardsUserAttrChanged")
-    @JvmStatic fun setListener(view: ChessboardView, isWhiteAttrChanged: InverseBindingListener) {
-        view.addBoardListener(object: ChessboardView.BoardListener {
+    @JvmStatic
+    fun setListener(view: ChessboardView, isWhiteAttrChanged: InverseBindingListener) {
+        view.addBoardListener(object : ChessboardView.BoardListener {
             override fun onMove(move: String) {
             }
 

@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         navController.graph = graph
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            when(destination.id) {
+            when (destination.id) {
                 R.id.nav_puzzle -> {
                     destination.addArgument("taskProvider", argProvider)
                 }
@@ -47,7 +47,8 @@ class MainActivity : AppCompatActivity() {
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_puzzle, R.id.nav_info), drawerLayout)
+        appBarConfiguration =
+            AppBarConfiguration(setOf(R.id.nav_puzzle, R.id.nav_info), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
