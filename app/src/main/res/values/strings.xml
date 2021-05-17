@@ -1,20 +1,19 @@
 <resources>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="app_name">Chess Puzzle Book</string>
-    <string name="solve_puzzles">Solve puzzles</string>
-    <string name="next_task">NEXT</string>
-    <string name="correct">Correct!</string>
-    <string name="correct_turn">Nice turn!</string>
-    <string name="wrong_turn">Wrong turn! Try again.</string>
-    <string name="show_turn">Show right turn</string>
-    <string name="your_elo">Your elo:</string>
-    <string name="task_target_elo">Task elo:</string>
-    <string name="username">Lichess.com username</string>
-    <string name="generate">Generate</string>
+    <string name="app_name">Шахматный задачник</string>
+    <string name="solve_puzzles">Решать задачи</string>
+    <string name="next_task">Следующая задача</string>
+    <string name="correct_turn">Правильный ход!</string>
+    <string name="wrong_turn">Неправильный ход! Попробуйте еще раз.</string>
+    <string name="show_turn">Показать правильный ход</string>
+    <string name="your_elo">Ваш рейтинг:</string>
+    <string name="task_target_elo">Рейтинг задачи:</string>
+    <string name="username">Имя пользователя на Lichess.com</string>
+    <string name="generate">Генерировать</string>
     <string name="nice_black_bishop">Nice black bishop</string>
-    <string name="generate_games_of">Generate games of</string>
-    <string name="from_last">from last</string>
-    <string name="games">games</string>
-    <string name="generate_puzzles">Generate puzzles</string>
+    <string name="generate_games_of">Генерировать игры игрока</string>
+    <string name="from_last">по последним</string>
+    <string name="games">играм</string>
+    <string name="generate_puzzles">Генеировать задачи</string>
     <string name="vs">vs</string>
 </resources>

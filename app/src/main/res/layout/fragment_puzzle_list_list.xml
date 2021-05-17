@@ -7,5 +7,5 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".ui.puzzle_list.TaskListFragment"
-    tools:listitem="@layout/fragment_task_list" />
+    tools:context=".ui.puzzle_list.PuzzleListFragment"
+    tools:listitem="@layout/fragment_puzzle_list" />

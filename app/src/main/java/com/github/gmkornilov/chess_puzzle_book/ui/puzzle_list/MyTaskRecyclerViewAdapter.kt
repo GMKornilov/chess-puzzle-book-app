@@ -25,7 +25,7 @@ class MyTaskRecyclerViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.fragment_task_list, parent, false)
+            .inflate(R.layout.fragment_puzzle_list, parent, false)
         return ViewHolder(view)
     }
 
