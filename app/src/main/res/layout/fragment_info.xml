@@ -8,7 +8,7 @@
 
         <variable
             name="viewmodel"
-            type="com.github.gmkornilov.chess_puzzle_book.ui.info.InfoViewModel" />
+            type="com.github.gmkornilov.chess_puzzle_book.ui.info.InfoFragmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,18 +34,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
             android:text="@string/generate_games_of"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@id/username"
-            app:layout_constraintEnd_toStartOf="@id/username"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/username" />
+            app:layout_constraintTop_toBottomOf="@id/imageView2" />
 
         <EditText
             android:id="@+id/username"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
             android:hint="@string/username"
@@ -55,8 +56,8 @@
             android:text="@={viewmodel.username}"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/generateText"
-            app:layout_constraintTop_toBottomOf="@id/imageView2" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/generateText" />
 
         <LinearLayout
             android:id="@+id/lastGamesLayout"

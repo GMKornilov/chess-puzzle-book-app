@@ -9,7 +9,7 @@
 
         <variable
             name="viewmodel"
-            type="com.github.gmkornilov.chess_puzzle_book.ui.puzzle.PuzzleViewModel" />
+            type="com.github.gmkornilov.chess_puzzle_book.ui.puzzle.PuzzleFragmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

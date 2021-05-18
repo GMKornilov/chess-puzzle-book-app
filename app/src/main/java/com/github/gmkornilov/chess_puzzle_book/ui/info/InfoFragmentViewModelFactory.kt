@@ -14,7 +14,7 @@ import retrofit2.Retrofit
  * ViewModel provider factory to instantiate LoginViewModel.
  * Required given LoginViewModel has a non-empty constructor
  */
-class InfoViewModelFactory(
+class InfoFragmentViewModelFactory(
     private val resources: Resources
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
@@ -29,6 +29,6 @@ class InfoViewModelFactory(
                 .build()
                 .create(TaskApi::class.java)
         }
-        return InfoViewModel(taskApi) as T
+        return InfoFragmentViewModel(taskApi) as T
     }
 }

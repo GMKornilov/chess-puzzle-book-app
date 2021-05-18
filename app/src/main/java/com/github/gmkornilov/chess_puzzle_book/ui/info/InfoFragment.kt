@@ -9,15 +9,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.github.gmkornilov.chess_puzzle_book.R
 import com.github.gmkornilov.chess_puzzle_book.data.api.LoadedTasks
 import com.github.gmkornilov.chess_puzzle_book.databinding.FragmentInfoBinding
 import com.google.android.material.snackbar.Snackbar
 
 class InfoFragment : Fragment() {
-    private val infoViewModel: InfoViewModel by viewModels {
-        InfoViewModelFactory(resources)
+    private val infoFragmentViewModel: InfoFragmentViewModel by viewModels {
+        InfoFragmentViewModelFactory(resources)
     }
     private lateinit var binding: FragmentInfoBinding
 
@@ -34,14 +33,14 @@ class InfoFragment : Fragment() {
         )
 
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewmodel = infoViewModel
+        binding.viewmodel = infoFragmentViewModel
 
         binding.lastGames.minValue = 1
         binding.lastGames.maxValue = 50
         binding.lastGames.value = 1
         binding.lastGames.wrapSelectorWheel = false
 
-        infoViewModel.loadedEvent.observe(viewLifecycleOwner, { event ->
+        infoFragmentViewModel.loadedEvent.observe(viewLifecycleOwner, { event ->
             event.getContentIfNotHandledOrReturnNull()?.let {
                 if (it.error.isNotEmpty()) {
                     Snackbar.make(requireView(), it.error, Snackbar.LENGTH_SHORT).show()
@@ -54,7 +53,7 @@ class InfoFragment : Fragment() {
                 }
             }
         })
-        infoViewModel.exceptionEvent.observe(viewLifecycleOwner, { event ->
+        infoFragmentViewModel.exceptionEvent.observe(viewLifecycleOwner, { event ->
             event.getContentIfNotHandledOrReturnNull()?.let {
                 Snackbar.make(requireView(), it.message!!, Snackbar.LENGTH_SHORT).show()
             }

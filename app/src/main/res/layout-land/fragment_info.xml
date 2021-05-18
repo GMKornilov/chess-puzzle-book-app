@@ -8,7 +8,7 @@
 
         <variable
             name="viewmodel"
-            type="com.github.gmkornilov.chess_puzzle_book.ui.info.InfoViewModel" />
+            type="com.github.gmkornilov.chess_puzzle_book.ui.info.InfoFragmentViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

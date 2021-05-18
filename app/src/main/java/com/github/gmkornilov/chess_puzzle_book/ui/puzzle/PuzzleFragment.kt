@@ -16,7 +16,7 @@ import com.google.android.material.snackbar.Snackbar
 
 class PuzzleFragment : Fragment() {
     private val args: PuzzleFragmentArgs by navArgs()
-    private val puzzleViewModel: PuzzleViewModel by viewModels {
+    private val puzzleFragmentViewModel: PuzzleFragmentViewModel by viewModels {
         PuzzleFragmentViewModelFactory(args.taskProvider)
     }
     private lateinit var binding: FragmentPuzzleBinding
@@ -31,7 +31,7 @@ class PuzzleFragment : Fragment() {
             if (sp != null) {
                 elo = sp.getInt("elo", 1200)
             }
-            EloUtils.elo = puzzleViewModel.elo.value ?: elo
+            EloUtils.elo = puzzleFragmentViewModel.elo.value ?: elo
         }
 
         binding = DataBindingUtil.inflate(
@@ -42,26 +42,26 @@ class PuzzleFragment : Fragment() {
         )
 
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewmodel = puzzleViewModel
+        binding.viewmodel = puzzleFragmentViewModel
 
-        binding.chessboardView.addBoardListener(puzzleViewModel)
+        binding.chessboardView.addBoardListener(puzzleFragmentViewModel)
 
-        puzzleViewModel.fenLoadedEvent.observe(viewLifecycleOwner, { event ->
+        puzzleFragmentViewModel.fenLoadedEvent.observe(viewLifecycleOwner, { event ->
             event.getContentIfNotHandledOrReturnNull()?.let {
                 binding.chessboardView.fen = it
             }
         })
-        puzzleViewModel.undoEvent.observe(viewLifecycleOwner, { event ->
+        puzzleFragmentViewModel.undoEvent.observe(viewLifecycleOwner, { event ->
             event.getContentIfNotHandledOrReturnNull()?.let {
                 binding.chessboardView.undo()
             }
         })
-        puzzleViewModel.turnEvent.observe(viewLifecycleOwner, { event ->
+        puzzleFragmentViewModel.turnEvent.observe(viewLifecycleOwner, { event ->
             event.getContentIfNotHandledOrReturnNull()?.let {
                 binding.chessboardView.lastMove = it
             }
         })
-        puzzleViewModel.exceptionEvent.observe(viewLifecycleOwner, {event ->
+        puzzleFragmentViewModel.exceptionEvent.observe(viewLifecycleOwner, { event ->
             event.getContentIfNotHandledOrReturnNull()?.let {
                 Snackbar.make(requireView(), it.message!!, Snackbar.LENGTH_SHORT).show()
             }
@@ -71,7 +71,7 @@ class PuzzleFragment : Fragment() {
     }
 
     override fun onResume() {
-        val vmFen = puzzleViewModel.currentFen.value
+        val vmFen = puzzleFragmentViewModel.currentFen.value
         if (vmFen != null) {
             binding.chessboardView.fen = vmFen
         }

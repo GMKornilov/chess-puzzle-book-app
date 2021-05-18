@@ -15,7 +15,7 @@ import kotlinx.coroutines.withContext
 import kotlin.Exception
 
 
-class InfoViewModel(
+class InfoFragmentViewModel(
     private val taskApi: TaskApi,
 ) : ViewModel() {
     val username = MutableLiveData<String>()

@@ -10,6 +10,6 @@ class PuzzleFragmentViewModelFactory(
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return PuzzleViewModel(taskProvider) as T
+        return PuzzleFragmentViewModel(taskProvider) as T
     }
 }

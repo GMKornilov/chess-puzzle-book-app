@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.Exception
 
-class PuzzleViewModel(
+class PuzzleFragmentViewModel(
     private val taskProvider: TaskProvider,
 ) : ViewModel(), ChessboardView.BoardListener {
     private val _isLoading = MutableLiveData(false)
