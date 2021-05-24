@@ -11,7 +11,7 @@ import okhttp3.MediaType
 import retrofit2.Retrofit
 
 /**
- * ViewModel provider factory to instantiate LoginViewModel.
+ * ViewModel provider factory to instantiate InfoViewModel.
  * Required given LoginViewModel has a non-empty constructor
  */
 class InfoFragmentViewModelFactory(

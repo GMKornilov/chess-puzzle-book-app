@@ -11,9 +11,9 @@
     <string name="username">Имя пользователя на Lichess.com</string>
     <string name="generate">Генерировать</string>
     <string name="nice_black_bishop">Nice black bishop</string>
-    <string name="generate_games_of">Генерировать игры игрока</string>
+    <string name="generate_games_of">Генерировать задачи по играм игрока</string>
     <string name="from_last">по последним</string>
     <string name="games">играм</string>
-    <string name="generate_puzzles">Генеировать задачи</string>
+    <string name="generate_puzzles">Генерировать задачи</string>
     <string name="vs">vs</string>
 </resources>

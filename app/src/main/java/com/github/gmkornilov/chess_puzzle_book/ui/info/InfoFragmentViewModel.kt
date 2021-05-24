@@ -70,7 +70,7 @@ class InfoFragmentViewModel(
                         }
                     }
                     is Result.Error -> {
-                        Log.println(Log.ERROR, "Internet error", result.exception.message!!)
+                        Log.println(Log.ERROR, "Internet error", "Ошибка интернет соединения")
                         _loading.postValue(false)
                         _exceptionEvent.postValue(Event(result.exception))
                         return@launch
@@ -83,13 +83,13 @@ class InfoFragmentViewModel(
     }
 
     private suspend fun fetchJob(): Result<JobInfo> {
-        val usernameStr = username.value ?: return Result.Error(Exception("Empty username"))
+        val usernameStr = username.value ?: return Result.Error(Exception("Неверные данные: пустое имя пользователя"))
         if (usernameStr.isBlank()) {
-            return Result.Error(Exception("Empty username"))
+            return Result.Error(Exception("Неверные данные: пустое имя пользователя"))
         }
-        val last = games.value ?: return Result.Error(Exception("Empty amount of games"))
+        val last = games.value ?: return Result.Error(Exception("Неверные данные: не введено количество игр"))
         if (last <= 0) {
-            return Result.Error(Exception("Not positive amount of games"))
+            return Result.Error(Exception("Неверные данные: количество игр отрицательные"))
         }
         return try {
             val response = taskApi.startGenerate(usernameStr, last)
@@ -99,7 +99,7 @@ class InfoFragmentViewModel(
                 Result.Error(Exception("Error starting generate"))
             }
         } catch (t: Exception) {
-            Result.Error(t)
+            Result.Error(Exception("Ошибка интернет соединения"))
         }
     }
 

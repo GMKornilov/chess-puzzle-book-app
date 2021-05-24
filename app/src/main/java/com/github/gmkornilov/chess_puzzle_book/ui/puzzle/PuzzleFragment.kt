@@ -63,7 +63,7 @@ class PuzzleFragment : Fragment() {
         })
         puzzleFragmentViewModel.exceptionEvent.observe(viewLifecycleOwner, { event ->
             event.getContentIfNotHandledOrReturnNull()?.let {
-                Snackbar.make(requireView(), it.message!!, Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(requireView(), "Ошибка интернет-соединения", Snackbar.LENGTH_SHORT).show()
             }
         })
 

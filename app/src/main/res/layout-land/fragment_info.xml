@@ -24,10 +24,10 @@
             android:layout_marginStart="16dp"
             android:text="@string/generate_games_of"
             android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@id/lastGamesLayout"
-            app:layout_constraintEnd_toStartOf="@id/username"
+            app:layout_constraintBottom_toTopOf="@id/lastGamesLayout"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/lastGamesLayout" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/username"
@@ -40,7 +40,7 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@id/lastGamesLayout"
             app:layout_constraintEnd_toStartOf="@id/lastGamesLayout"
-            app:layout_constraintStart_toEndOf="@id/generateText"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/lastGamesLayout"
             android:inputType="text" />
 

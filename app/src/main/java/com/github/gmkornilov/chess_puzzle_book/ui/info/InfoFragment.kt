@@ -43,7 +43,11 @@ class InfoFragment : Fragment() {
         infoFragmentViewModel.loadedEvent.observe(viewLifecycleOwner, { event ->
             event.getContentIfNotHandledOrReturnNull()?.let {
                 if (it.error.isNotEmpty()) {
-                    Snackbar.make(requireView(), it.error, Snackbar.LENGTH_SHORT).show()
+                    if (it.error.contains("doesn't exist on lichess")) {
+                        Snackbar.make(requireView(), "Данного пользователя не существует", Snackbar.LENGTH_SHORT).show()
+                    } else {
+                        Snackbar.make(requireView(), it.error, Snackbar.LENGTH_SHORT).show()
+                    }
                 } else {
                     Log.d("Loaded tasks", it.result.toString())
                     val loadedTasks = LoadedTasks(it.result)
