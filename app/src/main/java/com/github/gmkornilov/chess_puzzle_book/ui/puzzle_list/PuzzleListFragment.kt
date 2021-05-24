@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
@@ -33,15 +34,23 @@ class PuzzleListFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_puzzle_list_list, container, false)
 
+        val recyclerView = view.findViewById<RecyclerView>(R.id.list)
+        val noTasksTextView = view.findViewById<TextView>(R.id.noTaskText)
+
+        if (args.tasks.tasks.isEmpty()) {
+            recyclerView.visibility = View.GONE
+            noTasksTextView.visibility = View.VISIBLE
+        } else {
+            recyclerView.visibility = View.VISIBLE
+            noTasksTextView.visibility = View.GONE
+        }
         // Set the adapter
-        if (view is RecyclerView) {
-            with(view) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
-                }
-                adapter = MyTaskRecyclerViewAdapter(args.tasks.tasks, ::callback)
+        with(recyclerView) {
+            layoutManager = when {
+                columnCount <= 1 -> LinearLayoutManager(context)
+                else -> GridLayoutManager(context, columnCount)
             }
+            adapter = MyTaskRecyclerViewAdapter(args.tasks.tasks, ::callback)
         }
         return view
     }

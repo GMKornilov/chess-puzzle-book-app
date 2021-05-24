@@ -16,4 +16,5 @@
     <string name="games">играм</string>
     <string name="generate_puzzles">Генерировать задачи</string>
     <string name="vs">vs</string>
+    <string name="no_tasks_were_generated">По данным играм не сгенерировано ни одной задачи :(</string>
 </resources>
