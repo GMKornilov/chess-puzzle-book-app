@@ -157,7 +157,7 @@ class PuzzleFragmentViewModel(
             _lastMoveWrong.value = true
 
             if (taskDone.value != true) {
-                val minDepth = turns.minOf { turn -> turn.minDepth }
+                val minDepth = turns.minOf { it -> it.minDepth }
                 val percent = correctTurns.toFloat() / (correctTurns + minDepth).toFloat()
                 calcElo(percent)
             }
