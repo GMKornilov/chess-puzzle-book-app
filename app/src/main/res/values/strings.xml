@@ -7,7 +7,7 @@
     <string name="wrong_turn">Неправильный ход! Попробуйте еще раз.</string>
     <string name="show_turn">Показать правильный ход</string>
     <string name="your_elo">Ваш рейтинг:</string>
-    <string name="task_target_elo">Рейтинг задачи:</string>
+    <string name="task_target_elo">Рейтинг задачи: </string>
     <string name="username">Имя пользователя на Lichess.com</string>
     <string name="generate">Генерировать</string>
     <string name="nice_black_bishop">Nice black bishop</string>

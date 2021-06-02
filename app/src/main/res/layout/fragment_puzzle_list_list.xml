@@ -21,5 +21,6 @@
     android:textSize="20sp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:visibility="gone"
     android:text="@string/no_tasks_were_generated"/>
 </FrameLayout>
