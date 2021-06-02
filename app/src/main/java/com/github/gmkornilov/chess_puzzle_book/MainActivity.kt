@@ -51,8 +51,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         appBarConfiguration =
-            AppBarConfiguration(setOf(R.id.nav_puzzle, R.id.nav_info))
+            AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
+        toolbar.setupWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
 

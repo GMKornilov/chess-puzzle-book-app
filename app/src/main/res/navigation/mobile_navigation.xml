@@ -3,43 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_puzzle">
+    app:startDestination="@+id/solve_navigation">
 
-    <fragment
-        android:id="@+id/nav_puzzle"
-        android:name="com.github.gmkornilov.chess_puzzle_book.ui.puzzle.PuzzleFragment"
-        android:label="Решать задачи"
-        tools:layout="@layout/fragment_puzzle"
-        >
-        <argument
-            android:name="taskProvider"
-            app:argType="com.github.gmkornilov.chess_puzzle_book.data.providers.TaskProvider" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/nav_info"
-        android:name="com.github.gmkornilov.chess_puzzle_book.ui.info.InfoFragment"
-        android:label="Генерировать задачи"
-        tools:layout="@layout/fragment_info"/>
-
-    <fragment
-        android:id="@+id/nav_task_list"
-        android:name="com.github.gmkornilov.chess_puzzle_book.ui.puzzle_list.PuzzleListFragment"
-        android:label="Сгенерированные задачи"
-        tools:layout="@layout/fragment_puzzle_list_list">
-        <argument
-            android:name="tasks"
-            app:argType="com.github.gmkornilov.chess_puzzle_book.data.api.LoadedTasks"/>
-    </fragment>
-
-    <fragment
-        android:id="@+id/nav_generated_puzzle"
-        android:name="com.github.gmkornilov.chess_puzzle_book.ui.puzzle.PuzzleFragment"
-        android:label="Решать сгенерированные задачи"
-        tools:layout="@layout/fragment_puzzle"
-        >
-        <argument
-            android:name="taskProvider"
-            app:argType="com.github.gmkornilov.chess_puzzle_book.data.providers.TaskProvider" />
-    </fragment>
+    <include app:graph="@navigation/solve_navigation"/>
+    <include app:graph="@navigation/generate_navigation"/>
 </navigation>
