@@ -1,5 +1,8 @@
 package com.github.gmkornilov.chess_puzzle_book.ui.puzzle
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -48,7 +51,37 @@ class PuzzleFragment : Fragment() {
 
         puzzleFragmentViewModel.fenLoadedEvent.observe(viewLifecycleOwner, { event ->
             event.getContentIfNotHandledOrReturnNull()?.let {
-                binding.chessboardView.fen = it
+                val from = binding.chessboardView.rotationY
+                val to = from + 180
+
+                // да, мне стыдно, что я так криво-косо все делаю)0
+                // TODO: узнать, как делать листенер на окончание анимации из xml
+                val animDuration: Long = 800
+                val widthAnimBefore = ObjectAnimator.ofFloat(binding.chessboardView, "scaleX", 1f, 0.5f).apply {
+                    duration = animDuration / 2
+                }
+                val widthAnimAfter = ObjectAnimator.ofFloat(binding.chessboardView, "scaleX", 0.5f, 1f).apply {
+                    duration = animDuration / 2
+                }
+                val rotationAnim = ObjectAnimator.ofFloat(binding.chessboardView, "rotationY", from, to).apply {
+                    duration = animDuration
+                    addUpdateListener(object : ValueAnimator.AnimatorUpdateListener {
+                        var handled = false
+                        override fun onAnimationUpdate(animation: ValueAnimator?) {
+                            animation ?: return
+                            if (!handled && animation.animatedFraction >= 0.5) {
+                                handled = true
+                                binding.chessboardView.scaleX *= -1
+                                binding.chessboardView.fen = it
+                            }
+                        }
+                    })
+                }
+                AnimatorSet().apply {
+                    play(widthAnimBefore).with(rotationAnim)
+                    play(widthAnimAfter).after(widthAnimBefore)
+                    start()
+                }
             }
         })
         puzzleFragmentViewModel.undoEvent.observe(viewLifecycleOwner, { event ->
