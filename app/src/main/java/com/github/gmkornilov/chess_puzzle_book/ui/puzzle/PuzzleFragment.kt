@@ -1,13 +1,12 @@
 package com.github.gmkornilov.chess_puzzle_book.ui.puzzle
 
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
+import android.animation.*
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -51,35 +50,23 @@ class PuzzleFragment : Fragment() {
 
         puzzleFragmentViewModel.fenLoadedEvent.observe(viewLifecycleOwner, { event ->
             event.getContentIfNotHandledOrReturnNull()?.let {
-                val from = binding.chessboardView.rotationY
-                val to = from + 180
+                val flipOutAnimation = AnimatorInflater.loadAnimator(context, R.animator.flip_out)
+                flipOutAnimation.setTarget(binding.chessboardView)
+                flipOutAnimation.addListener(object : Animator.AnimatorListener {
+                    override fun onAnimationEnd(animation: Animator?) {
+                        binding.chessboardView.fen = it
+                    }
 
-                // да, мне стыдно, что я так криво-косо все делаю)0
-                // TODO: узнать, как делать листенер на окончание анимации из xml
-                val animDuration: Long = 800
-                val widthAnimBefore = ObjectAnimator.ofFloat(binding.chessboardView, "scaleX", 1f, 0.5f).apply {
-                    duration = animDuration / 2
-                }
-                val widthAnimAfter = ObjectAnimator.ofFloat(binding.chessboardView, "scaleX", 0.5f, 1f).apply {
-                    duration = animDuration / 2
-                }
-                val rotationAnim = ObjectAnimator.ofFloat(binding.chessboardView, "rotationY", from, to).apply {
-                    duration = animDuration
-                    addUpdateListener(object : ValueAnimator.AnimatorUpdateListener {
-                        var handled = false
-                        override fun onAnimationUpdate(animation: ValueAnimator?) {
-                            animation ?: return
-                            if (!handled && animation.animatedFraction >= 0.5) {
-                                handled = true
-                                binding.chessboardView.scaleX *= -1
-                                binding.chessboardView.fen = it
-                            }
-                        }
-                    })
-                }
+                    override fun onAnimationStart(animation: Animator?) = Unit
+                    override fun onAnimationCancel(animation: Animator?) = Unit
+                    override fun onAnimationRepeat(animation: Animator?) = Unit
+                })
+
+                val flipInAnimation = AnimatorInflater.loadAnimator(context, R.animator.flip_in)
+                flipInAnimation.setTarget(binding.chessboardView)
+
                 AnimatorSet().apply {
-                    play(widthAnimBefore).with(rotationAnim)
-                    play(widthAnimAfter).after(widthAnimBefore)
+                    play(flipOutAnimation).before(flipInAnimation)
                     start()
                 }
             }
